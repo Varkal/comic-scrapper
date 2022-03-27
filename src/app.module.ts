@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { BrowserService } from "./browser.service";
-import { ComicController } from "./comic.controller";
+import { ComicsController } from "./comics.controller";
+import { SeriesController } from "./series.controller";
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  controllers: [ComicController],
+  controllers: [ComicsController, SeriesController],
   providers: [BrowserService],
 })
 export class AppModule {}

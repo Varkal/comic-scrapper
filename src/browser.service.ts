@@ -2,6 +2,7 @@ import { Injectable, Logger, OnApplicationShutdown } from "@nestjs/common";
 import * as puppeteer from "puppeteer";
 import { load } from "cheerio";
 import { ComicBuilder } from "./builder/comic.builder";
+import { SerieBuilder } from "./builder/serie.builder";
 
 @Injectable()
 export class BrowserService implements OnApplicationShutdown {
@@ -58,6 +59,15 @@ export class BrowserService implements OnApplicationShutdown {
     await page.goto(url);
     // return await page.content();
     return new ComicBuilder(url, await page.content(), id).toJSON();
+  }
+
+  public async getSerieById(id: string): Promise<any> {
+    const url = this.getUrl(`/comics/series/${id}`);
+    const browser = await this.getBrowser();
+    const page = await browser.newPage();
+    await page.goto(url);
+    // return await page.content();
+    return new SerieBuilder(url, await page.content(), id).toJSON();
   }
 
   async onApplicationShutdown() {
